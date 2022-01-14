@@ -22,6 +22,7 @@ public class CodeGenerator {
     private static final String JDBC_USERNAME = "root";
     private static final String JDBC_PASSWORD = "123456";
     private static final String JDBC_DIVER_CLASS_NAME = "com.mysql.jdbc.Driver";
+    private static final List<String> JDBC_ALL_TABLES = Arrays.asList("DEMO_TEST1","DEMO_TEST2");
 
     private static final String PROJECT_PATH = System.getProperty("user.dir");//项目在硬盘上的基础路径
     private static final String TEMPLATE_FILE_PATH = PROJECT_PATH + "/src/test/resources/generator/template";//模板位置
@@ -38,7 +39,17 @@ public class CodeGenerator {
 
     public static void main(String[] args) {
         genCode("输入表名");
+        //genAllCode();
         //genCodeByCustomModelName("输入表名","输入自定义Model名称");
+    }
+
+    /**
+     * 通过JDBC_ALL_TABLES获取所有的表名，生成代码，Model 名称通过解析数据表名称获得，下划线转大驼峰的形式。
+     */
+    public static void genAllCode() {
+        for (String tableName : JDBC_ALL_TABLES) {
+            genCodeByCustomModelName(tableName, null);
+        }
     }
 
     /**
